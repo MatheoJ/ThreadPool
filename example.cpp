@@ -2,13 +2,19 @@
 #include <vector>
 #include <chrono>
 
-#include "ThreadPool.h"
+#include "generator.h"
 
 int main()
 {
+    const uint32_t num_threads = std::thread::hardware_concurrency(); // Max # of threads the system supports
+    std::cout<<"Nb coeur = "<<num_threads<<std::endl;
+    ThreadPool pool(num_threads);
+
+    generator g;
+    g.gen(16,pool); 
+
+    /* std::vector< std::future<int> > results;
     
-    ThreadPool pool(4);
-    std::vector< std::future<int> > results;
 
     for(int i = 0; i < 8; ++i) {
         results.emplace_back(
@@ -24,6 +30,6 @@ int main()
     for(auto && result: results)
         std::cout << result.get() << ' ';
     std::cout << std::endl;
-    
+     */
     return 0;
 }

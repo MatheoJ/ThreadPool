@@ -59,9 +59,9 @@ inline ThreadPool::ThreadPool(size_t threads)
 }
 
 // add new work item to the pool
-template<class F, class... Args>
-auto ThreadPool::enqueue(F&& f, Args&&... args) 
-    -> std::future<typename std::result_of<F(Args...)>::type>
+template<class Obj, class F, class... Args>
+auto ThreadPool::enqueue(Obj && o, F&& f, Args&&... args) 
+    -> std::future<typename std::result_of<Obj.F(Args...)>::type>
 {
     using return_type = typename std::result_of<F(Args...)>::type;
 
